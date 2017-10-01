@@ -10,7 +10,7 @@ However, if you'd like a simple way of creating web content using a concise temp
 There are 2 motivations for static:
 
 1.  Compile .amber or .markdown files into .html
-1.  Provide browser/client side routing
+1.  Facilitate staging of sites to remote services
 
 ## Requirements
 
@@ -22,9 +22,7 @@ There are 2 motivations for static:
 
 ## Usage
 
-### Initialize static site
-
-`static init`
+### `static init`
 
 _creates the following hierarchy and files in the current directory:_
 
@@ -35,6 +33,7 @@ _creates the following hierarchy and files in the current directory:_
 ./layout.haml
 `
 
-### Compile templates
-
-`static`
+### `static compile`
+### `static clean`
+### `static version`
+### `static server`
