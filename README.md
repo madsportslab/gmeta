@@ -3,14 +3,16 @@ Opinionated static site compiler written in golang
 
 ## Description
 
-Static is for sites where content is generally unchanged, a blog with commenting and
+static is for sites where content is generally unchanged, a blog with commenting and
 API backend that keeps a lot of state server-side is not a great use case for static.
-However, if you'd like a simple way of creating web content using a concise templating language that allows greater levels of re-use and control over the look and feel, then static is for you.
+However, if you'd like a simple way of creating web content using a templating language, then static is for you.  You don't need to write any javascript code or learn any heavyweight frameworks.  All content is compiled ahead of time and can be served with various web servers.  Content and formatting are key to static sites so keep the focus
+and let static do the rest for you.
 
-There are 2 motivations for static:
+## Features
 
-1.  Compile .amber or .markdown files into .html
-1.  Facilitate staging of sites to remote services
+1.  Compile .amber, .markdown, .md files into .html
+1.  Allow for testing of static content before staging
+1.  Facilitate staging of sites
 
 ## Requirements
 
@@ -24,11 +26,11 @@ There are 2 motivations for static:
 
 ### `static init`
 
-_creates the following hierarchy and files in the current directory:_
+_creates the following hierarchy and files in the current working directory:_
 
 `
-./css
-./js
+./assets/css
+./assets/js
 ./index.haml
 ./layout.haml
 `
