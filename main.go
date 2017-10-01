@@ -62,8 +62,8 @@ func initRouter() *mux.Router {
 
 	router := mux.NewRouter()
 
-	router.PathPrefix("/static").Handler(http.StripPrefix("/static",
-		http.FileServer(http.Dir("./static"))))
+	router.PathPrefix("/assets").Handler(http.StripPrefix("/assets",
+		http.FileServer(http.Dir("./assets"))))
 	
 	router.HandleFunc("/", genericHandler)
 	router.HandleFunc("/{resource}", genericHandler)
