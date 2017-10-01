@@ -1,15 +1,74 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
+	"html/template"
 	
 	"github.com/eknkc/amber"
 	"github.com/fatih/color"
 	"github.com/russross/blackfriday"
 )
+
+func fileExists(filename string) bool {
+
+	_, err := os.Stat(filename)
+
+	if os.IsNotExist(err) {
+		return false
+	} else {
+		return true
+	}
+
+} // fileExists
+
+func toHtml(filename string) string {
+
+	var ret string
+
+	ext := filepath.Ext(filename)
+
+	switch ext {
+	case AMBER:
+		str := strings.TrimSuffix(filename, AMBER)
+		ret = fmt.Sprintf("%s.html", str)
+
+	case MARKDOWN:
+		str := strings.TrimSuffix(filename, MARKDOWN)
+		ret = fmt.Sprintf("%s.html", str)
+		
+	case MD:
+		str := strings.TrimSuffix(filename, MD)
+		ret = fmt.Sprintf("%s.html", str)
+		
+	}
+
+	return ret
+
+} // toHtml
+
+func writeHtml(filename string, t *template.Template) {
+
+	fh, err := os.Create(filename)
+	
+	defer fh.Close()
+
+	if err != nil {
+		color.Red("Error: %s", err)
+	} else {
+
+		err := t.Execute(fh, nil)
+
+		if err != nil {
+			color.Red("Error: %s", err)
+		}
+
+	}
+
+} // writeHtml
 
 func getFiles() []string {
 
@@ -52,9 +111,23 @@ func compile() {
 
 				if err != nil {
 					color.Red("error: %s", err)
-				}
+				} else {
 
-				t.Execute(os.Stdout, nil)
+					htmlFilename := toHtml(f)
+
+					if fileExists(htmlFilename) {
+
+						if *cmdForce {
+							writeHtml(htmlFilename, t)
+						} else {
+							color.Yellow("File %s already exists, file skipped....", f)
+						}
+
+					} else {
+						writeHtml(htmlFilename, t)
+					}
+
+				}
 
 			}
 	

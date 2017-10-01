@@ -15,6 +15,10 @@ There are 2 motivations for static:
 ## Requirements
 
 1.  golang 1.9+
+1.  `go get github.com/fatih/color`
+1.  `go get gopkg.in/alecthomas/kingpin.v2`
+1.  `go get github.com/russross/blackfriday`
+1.  `go get github.com/eknkc/amber`
 
 ## Usage
 
