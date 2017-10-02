@@ -64,6 +64,8 @@ func writeHtml(filename string, t *template.Template) {
 
 		if err != nil {
 			color.Red("Error: %s", err)
+		} else {
+			tagFile(filename)
 		}
 
 	}

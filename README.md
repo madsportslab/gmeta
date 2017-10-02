@@ -29,13 +29,31 @@ and let static do the rest for you.
 _creates the following hierarchy and files in the current working directory:_
 
 `
-./assets/css
-./assets/js
-./index.haml
-./layout.haml
+assets/css/site.css
+assets/js/config.js
+assets/js/site.js
+index.haml
+indexbar.haml
+layout.haml
+menubar.haml
 `
 
 ### `static compile`
 ### `static clean`
 ### `static version`
 ### `static server`
+
+## TODO
+
+- [ ] generate .static file that lists all the compiled output files
+- [ ] configuration file to avoid certain file types like indexbar.amber
+- [ ] source and destination
+- [ ] clone skeleton from github
+- [ ] upload to github pages
+- [ ] upload to s3
+- [ ] documentation for deploying to web servers
+- [ ] automatically generate web server configuration, e.g. nginx.conf
+- [ ] docker file
+- [ ] automatically download assets like material-ui, bootstrap, etc
+- [ ] markdown support
+- [ ] push to github repository

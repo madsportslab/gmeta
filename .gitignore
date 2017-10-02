@@ -1,3 +1,4 @@
 static
 *.amber
 *.html
+.static.json

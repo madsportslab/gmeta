@@ -23,6 +23,11 @@ const (
 	AMBER   					= ".amber"
 	MARKDOWN					= ".markdown"
 	MD      					= ".md"
+)
+
+const (
+	CLEAN_FILE        = ".static.json"
+	CONFIG_FILE       = ".staticrc"
 	DEFAULT_ADDRESS   = "localhost"
 	DEFAULT_PORT      = "8888"
 	PWD								= "."
@@ -77,6 +82,8 @@ func main() {
 	switch kingpin.Parse() {
 	case CMD_CLEAN:
 		color.Green("Deleting files...")
+		cleanFiles()
+		
 	case CMD_INIT:
 		color.Green("Creating static site contents...")
 	case CMD_SERVER:
