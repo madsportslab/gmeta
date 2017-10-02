@@ -13,6 +13,8 @@ const (
 
 	CMD_CLEAN     = "clean"
 	CMD_COMPILE   = "compile"
+	CMD_CONFIG    = "config"
+	CMD_LIST      = "list"
 	CMD_INIT			= "init"
 	CMD_SERVER    = "server"
 	CMD_VERSION		= "version"
@@ -30,6 +32,7 @@ const (
 	CONFIG_FILE       = ".staticrc"
 	DEFAULT_ADDRESS   = "localhost"
 	DEFAULT_PORT      = "8888"
+	EXCLUDE           = "exclude"
 	PWD								= "."
 	VERSION 					= "0.1.0"
 )
@@ -39,6 +42,10 @@ var (
 	cmdClean    = kingpin.Command("clean", "Clean up site")
 	cmdInit			= kingpin.Command("init", "Initialize site")
 	cmdVersion	=	kingpin.Command("version", "static version")
+
+	cmdConfig   = kingpin.Command("config", "static configuration")	
+	cmdExclude  = cmdConfig.Flag(
+		"exclude", "Comma delimited list of files to exclude from compilation").Short('e').String()
 
 	cmdServer		=	kingpin.Command("server", "Starts up local server for testing")
 	cmdPort			=	cmdServer.Flag("port", "Port used by static server").String()
@@ -83,7 +90,15 @@ func main() {
 	case CMD_CLEAN:
 		color.Green("Deleting files...")
 		cleanFiles()
+
+	case CMD_CONFIG:
 		
+		if len(*cmdExclude) == 0 {
+			showConfig()			
+		} else {
+			setExclude()
+		}
+
 	case CMD_INIT:
 		color.Green("Creating static site contents...")
 	case CMD_SERVER:

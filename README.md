@@ -5,8 +5,8 @@ Opinionated static site compiler written in golang
 
 static is for sites where content is generally unchanged, a blog with commenting and
 API backend that keeps a lot of state server-side is not a great use case for static.
-However, if you'd like a simple way of creating web content using a templating language, then static is for you.  You don't need to write any javascript code or learn any heavyweight frameworks.  All content is compiled ahead of time and can be served with various web servers.  Content and formatting are key to static sites so keep the focus
-and let static do the rest for you.
+However, if you'd like a simple way of creating web content using a templating language, then static is for you.  You don't need to write any javascript code or learn any heavyweight frameworks.  All content is compiled ahead of time and can be served from various web servers like apache or reverse proxies like nginx.  Content and formatting are key to static sites so let static do all the meanial tasks while you focus on the
+content and layout.
 
 ## Features
 

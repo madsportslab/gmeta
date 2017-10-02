@@ -56,7 +56,12 @@ func cleanFiles() {
 
 	}
 
-	} // cleanFiles
+	if fileExists(CONFIG_FILE) {
+		color.Yellow("Deleting .staticrc...")
+		os.Remove(CONFIG_FILE)
+	}
+
+} // cleanFiles
 
 func tagFile(filename string) {
 
