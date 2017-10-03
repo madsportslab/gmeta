@@ -9,6 +9,23 @@ import (
 	"github.com/fatih/color"
 )
 
+func isExcluded(filename string) bool {
+	
+	conf := readConfig()
+
+	list := strings.Split(conf[EXCLUDE], ",")
+
+	for _, f := range list {
+		if strings.Trim(filename, " ") == strings.Trim(f, " ") {
+			return true
+		}
+	}
+
+	return false
+
+} // isExcluded
+
+
 func readConfig() map[string]string {
 
 	conf := map[string]string{}
@@ -38,7 +55,7 @@ func toCsv(files []string) string {
 		if i == 0 {
 			ret = fmt.Sprintf("%s", f)
 		} else {
-			ret = fmt.Sprintf("%s, %s", ret, f)
+			ret = fmt.Sprintf("%s,%s", ret, f)
 		}
 
 	}

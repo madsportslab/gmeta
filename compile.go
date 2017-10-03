@@ -99,9 +99,12 @@ func compile() {
 
 	for _, f := range(filenames) {
 
-		color.Cyan(f)
+		if isExcluded(f) {
+			continue
+		}
 
 		if strings.Contains(f, AMBER) {
+			
 			
 			err := compiler.ParseFile(f)
 
@@ -149,9 +152,7 @@ func compile() {
 					color.Red("Error: %s", err)
 				}
 	
-				out := blackfriday.MarkdownCommon(buf)
-	
-				color.Green(string(out))
+				_ = blackfriday.MarkdownCommon(buf)
 				
 			}
 			
