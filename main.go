@@ -28,8 +28,8 @@ const (
 )
 
 const (
-	CLEAN_FILE        = ".static.json"
-	CONFIG_FILE       = ".staticrc"
+	CLEAN_FILE        = ".static.clean"
+	CONFIG_FILE       = ".static.conf"
 	DEFAULT_ADDRESS   = "localhost"
 	DEFAULT_PORT      = "8888"
 	EXCLUDE           = "exclude"
