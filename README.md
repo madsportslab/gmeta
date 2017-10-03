@@ -29,10 +29,10 @@ _creates the following hierarchy and files in the current working directory:_
 assets/css/site.css
 assets/js/config.js
 assets/js/site.js
-index.haml
-indexbar.haml
-layout.haml
-menubar.haml
+index.amber
+indexbar.amber
+layout.amber
+menubar.amber
 .static.clean
 .static.conf
 `
@@ -83,6 +83,12 @@ Shows version of static.
 ### `static server`
 
 Runs a mini-http server with content
+
+## FAQ
+
+### Why not just use Hugo?
+
+Hugo is a great tool also for creating static sites, 
 
 ## TODO
 
