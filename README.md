@@ -23,7 +23,7 @@ static is a command tool to aide in building web sites where content is generall
 
 ### `static init`
 
-_creates the following hierarchy and files in the current working directory:_
+Creates the following hierarchy and files in the current working directory:
 
 `
 assets/css/site.css
