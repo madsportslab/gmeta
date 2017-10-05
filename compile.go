@@ -27,43 +27,48 @@ func fileExists(filename string) bool {
 
 func toHtml(filename string) string {
 
-	var ret string
+	var str string
 
-	ext := filepath.Ext(filename)
+	ext 	:= filepath.Ext(filename)
+	base	:= filepath.Base(filename)
 
 	switch ext {
 	case AMBER:
-		str := strings.TrimSuffix(filename, AMBER)
-		ret = fmt.Sprintf("%s.html", str)
+		str = strings.TrimSuffix(base, AMBER)
 
-	case MARKDOWN:
-		str := strings.TrimSuffix(filename, MARKDOWN)
-		ret = fmt.Sprintf("%s.html", str)
-		
+	case MARKDOWN:		
+		str = strings.TrimSuffix(base, MARKDOWN)
+
 	case MD:
-		str := strings.TrimSuffix(filename, MD)
-		ret = fmt.Sprintf("%s.html", str)
+		str = strings.TrimSuffix(base, MD)
 		
 	}
 
-	return ret
+	if len(*cmdOut) == 0 {
+		return fmt.Sprintf("%s.html", str)	
+	} else {
+		return fmt.Sprintf("%s/%s.html", *cmdOut, str)
+	}
 
 } // toHtml
 
 func writeHtml(filename string, t *template.Template) {
 
+	// TODO: directory exists?
 	fh, err := os.Create(filename)
 	
 	defer fh.Close()
 
 	if err != nil {
-		color.Red("Error: %s", err)
+		color.Red("[Error] writeHtml(): %s", err)
 	} else {
+
+		color.Green("Compiling to %s...", filename)
 
 		err := t.Execute(fh, nil)
 
 		if err != nil {
-			color.Red("Error: %s", err)
+			color.Red("[Error] writeHtml(): %s", err)
 		} else {
 			tagFile(filename)
 		}
@@ -80,7 +85,9 @@ func getFiles() []string {
 		dir = PWD
 	}
 
-	files, err := filepath.Glob("./*[.amber|.md]")
+	path := fmt.Sprintf("%s/*[.amber|.md]", dir)
+
+	files, err := filepath.Glob(path)
 
 	if err != nil {
 		color.Red("Error: %s", err)
@@ -109,13 +116,13 @@ func compile() {
 			err := compiler.ParseFile(f)
 
 			if err != nil {
-				color.Red("Error: %s", err)
+				color.Red("[Error] compile(): %s", err)
 			} else {
 
 				t, err := compiler.Compile()
 
 				if err != nil {
-					color.Red("error: %s", err)
+					color.Red("[Error] compile(): %s", err)
 				} else {
 
 					htmlFilename := toHtml(f)
@@ -125,7 +132,9 @@ func compile() {
 						if *cmdForce {
 							writeHtml(htmlFilename, t)
 						} else {
-							color.Yellow("File %s already exists, file skipped....", f)
+							color.Yellow(
+								"File %s exists, skipping.  Use --force to overwrite....",
+								htmlFilename)
 						}
 
 					} else {
@@ -143,13 +152,13 @@ func compile() {
 			file, err := os.Open(f)
 
 			if err != nil {
-				color.Red("Error: %s", err)
+				color.Red("[Error] compile(): %s", err)
 			} else {
 
 				buf, err := ioutil.ReadAll(file)
 				
 				if err != nil {
-					color.Red("Error: %s", err)
+					color.Red("[Error] compile(): %s", err)
 				}
 	
 				_ = blackfriday.MarkdownCommon(buf)

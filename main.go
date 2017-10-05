@@ -52,7 +52,7 @@ var (
 
 	cmdCompile	=	kingpin.Command("compile", "Compile templates")
 	cmdDir			= cmdCompile.Flag(
-		"in", "Source file location").Short('d').String()
+		"dir", "Source file location").Short('d').String()
 	cmdOut	    = cmdCompile.Flag(
 		"out", "Output location").Short('o').String()
 	cmdForce    = cmdCompile.Flag(

@@ -44,7 +44,7 @@ func cleanFiles() {
 			if text == "Y" {
 
 				removeFiles()
-				color.Yellow("Deleting .static.json...")				
+				color.Yellow("Deleting %s...", CLEAN_FILE)				
 				os.Remove(CLEAN_FILE)
 				break
 
@@ -57,7 +57,7 @@ func cleanFiles() {
 	}
 
 	if fileExists(CONFIG_FILE) {
-		color.Yellow("Deleting .staticrc...")
+		color.Yellow("Deleting %s...", CONFIG_FILE)
 		os.Remove(CONFIG_FILE)
 	}
 
@@ -80,9 +80,7 @@ func tagFile(filename string) {
 
 		_, ok := tagged[filename]
 
-		if ok {
-			color.Blue("exists bitch")
-		} else {
+		if !ok {
 			addTag(tagged, filename)
 		}
 
