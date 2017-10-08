@@ -54,7 +54,14 @@ func toHtml(filename string) string {
 
 func writeHtml(filename string, t *template.Template) {
 
-	// TODO: directory exists?
+	if len(*cmdOut) > 0 {
+		
+		if !fileExists(*cmdOut) {
+			color.Red(
+				"Output directory does not exist, aborting.  Please create directory.")
+		}
+
+	}
 	fh, err := os.Create(filename)
 	
 	defer fh.Close()
@@ -63,7 +70,7 @@ func writeHtml(filename string, t *template.Template) {
 		color.Red("[Error] writeHtml(): %s", err)
 	} else {
 
-		color.Green("Compiling to %s...", filename)
+		color.Green("%s created...", filename)
 
 		err := t.Execute(fh, nil)
 
@@ -79,7 +86,7 @@ func writeHtml(filename string, t *template.Template) {
 
 func getFiles() []string {
 
-	dir := *cmdDir
+	dir := *cmdSrc
 
 	if len(dir) == 0 {
 		dir = PWD
@@ -111,7 +118,6 @@ func compile() {
 		}
 
 		if strings.Contains(f, AMBER) {
-			
 			
 			err := compiler.ParseFile(f)
 

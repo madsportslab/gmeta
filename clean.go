@@ -56,7 +56,7 @@ func cleanFiles() {
 
 	}
 
-	if fileExists(CONFIG_FILE) {
+	if fileExists(CONFIG_FILE) && *cmdCleanAll {
 		color.Yellow("Deleting %s...", CONFIG_FILE)
 		os.Remove(CONFIG_FILE)
 	}

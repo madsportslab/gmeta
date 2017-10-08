@@ -14,9 +14,8 @@ const (
 	CMD_CLEAN     = "clean"
 	CMD_COMPILE   = "compile"
 	CMD_CONFIG    = "config"
-	CMD_LIST      = "list"
 	CMD_INIT			= "init"
-	CMD_SERVER    = "server"
+	CMD_TEST      = "test"
 	CMD_VERSION		= "version"
 
 )
@@ -39,20 +38,28 @@ const (
 
 var (
 
-	cmdClean    = kingpin.Command("clean", "Clean up site")
+	cmdClean    = kingpin.Command("clean", "Remove compiled html files only")
+	cmdCleanAll = cmdClean.Flag("all",
+		"Remove all compiled html and configuration files").Short('a').Bool()
+	
 	cmdInit			= kingpin.Command("init", "Initialize site")
 	cmdVersion	=	kingpin.Command("version", "static version")
 
 	cmdConfig   = kingpin.Command("config", "static configuration")	
-	cmdExclude  = cmdConfig.Flag(
-		"exclude", "Comma delimited list of files to exclude from compilation").Short('e').String()
+	cmdExclude  = cmdConfig.Flag("exclude",
+		"Comma delimited list of files to exclude from compilation").Short(
+			'e').String()
+	cmdList     = cmdConfig.Flag("list",
+	  "List all configuration parameters.").Bool()
 
-	cmdServer		=	kingpin.Command("server", "Starts up local server for testing")
-	cmdPort			=	cmdServer.Flag("port", "Port used by static server").String()
+	cmdTest		  =	kingpin.Command("test",
+		"Starts up local http server for testing")
+	cmdPort			=	cmdTest.Flag("port",
+		"Port used by static server").String()
 
 	cmdCompile	=	kingpin.Command("compile", "Compile templates")
-	cmdDir			= cmdCompile.Flag(
-		"dir", "Source file location").Short('d').String()
+	cmdSrc			= cmdCompile.Flag(
+		"src", "Source file location").Short('d').String()
 	cmdOut	    = cmdCompile.Flag(
 		"out", "Output location").Short('o').String()
 	cmdForce    = cmdCompile.Flag(
@@ -88,12 +95,13 @@ func main() {
 	
 	switch kingpin.Parse() {
 	case CMD_CLEAN:
+		
 		color.Green("Deleting files...")
 		cleanFiles()
 
 	case CMD_CONFIG:
 		
-		if len(*cmdExclude) == 0 {
+		if len(*cmdExclude) == 0 || *cmdList {
 			showConfig()			
 		} else {
 			setExclude()
@@ -101,8 +109,10 @@ func main() {
 
 	case CMD_INIT:
 		color.Green("Creating static site contents...")
-	case CMD_SERVER:
-		color.Green("Starting server on %s...", address())
+	
+	case CMD_TEST:
+
+		color.Green("Please open your browser to %s...", address())
 
 		router := initRouter()
 
@@ -110,8 +120,9 @@ func main() {
 
 	case CMD_VERSION:
 		color.Green("static v%s", VERSION)
+	
 	case CMD_COMPILE:
-		color.Yellow("Compiling...")
+		color.White("Compiling...")
 		compile()
 	}
 	
